@@ -41,6 +41,10 @@ public class Dimensions {
         this.y = height;
     }
 
+    public boolean does_fit_inside(Dimensions other){
+        return this.x <= other.getX() && this.y <= other.getY();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

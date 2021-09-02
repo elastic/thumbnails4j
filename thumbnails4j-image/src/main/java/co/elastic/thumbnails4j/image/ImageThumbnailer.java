@@ -3,6 +3,7 @@ package co.elastic.thumbnails4j.image;
 import co.elastic.thumbnails4j.core.Dimensions;
 import co.elastic.thumbnails4j.core.ThumbnailUtils;
 import co.elastic.thumbnails4j.core.Thumbnailer;
+import co.elastic.thumbnails4j.core.ThumbnailingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,16 +20,16 @@ public class ImageThumbnailer implements Thumbnailer {
     private static Logger logger = LoggerFactory.getLogger(ImageThumbnailer.class);
 
     @Override
-    public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) {
+    public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
         return getThumbnailsHelper(input, dimensions);
     }
 
     @Override
-    public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) {
+    public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) throws ThumbnailingException {
         return getThumbnailsHelper(input, dimensions);
     }
 
-    private List<BufferedImage> getThumbnailsHelper(Object input, List<Dimensions> dimensions) {
+    private List<BufferedImage> getThumbnailsHelper(Object input, List<Dimensions> dimensions) throws ThumbnailingException {
         BufferedImage image;
         try {
             if (input instanceof File) {
@@ -41,7 +42,7 @@ public class ImageThumbnailer implements Thumbnailer {
         } catch (IOException e) {
             logger.error("Failed to read image from file {}", input);
             logger.error("With stacktrace: ", e);
-            throw new RuntimeException(e);
+            throw new ThumbnailingException(e);
         }
         List<BufferedImage> output = new ArrayList<>();
         for (Dimensions singleDimension: dimensions) {

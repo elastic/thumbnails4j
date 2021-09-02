@@ -1,9 +1,27 @@
 package co.elastic.thumbnails4j.core;
 
+import javax.swing.*;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class ThumbnailUtils {
+
+    private static Dimensions MAX_IN_MEMORY_BUFFER = new Dimensions(310, 430);
+
+    public static Dimensions getMaxInMemoryBuffer() {
+        return MAX_IN_MEMORY_BUFFER;
+    }
+
+    public static void setMaxInMemoryBuffer(Dimensions maxInMemoryBuffer) {
+        MAX_IN_MEMORY_BUFFER = maxInMemoryBuffer;
+    }
 
     /**
      * This algorithm is based off: https://community.oracle.com/docs/DOC-983611
@@ -51,5 +69,58 @@ public class ThumbnailUtils {
         } else {
             return value;
         }
+    }
+
+    public static Dimensions memoryOptimiseDimension(Dimensions dimensions){
+        if(dimensions.does_fit_inside(MAX_IN_MEMORY_BUFFER)){
+            return dimensions;
+        } else {
+            double givenXYRatio = ((double) dimensions.getWidth()) / (dimensions.getHeight());
+            Dimensions result = new Dimensions(dimensions.getWidth(), dimensions.getHeight());
+            double destXYRatio = ((double) MAX_IN_MEMORY_BUFFER.getWidth()) / (MAX_IN_MEMORY_BUFFER.getHeight());
+            if (givenXYRatio > destXYRatio) {
+                // X is the limiting factor
+                result.setWidth(MAX_IN_MEMORY_BUFFER.getWidth());
+                result.setHeight((int)(((double) MAX_IN_MEMORY_BUFFER.getWidth()) / givenXYRatio));
+            } else {
+                // Y is the limiting factor
+                result.setHeight(MAX_IN_MEMORY_BUFFER.getHeight());
+                result.setWidth((int)(MAX_IN_MEMORY_BUFFER.getHeight() * givenXYRatio));
+            }
+            return result;
+        }
+    }
+
+    public static Transformer getTransformerForXhtmlDOM() throws TransformerConfigurationException {
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml"); // see https://stackoverflow.com/a/5126973/2479282. JPaneEditor uses an xml parser for html
+        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        return transformer;
+    }
+
+    public static BufferedImage htmlToImage(JEditorPane htmlComponent, Dimensions dimensions){
+        Dimensions optimizedDimensions = memoryOptimiseDimension(dimensions);
+        double scale_factor = ((double) optimizedDimensions.getWidth()) / dimensions.getWidth();
+        BufferedImage image = new BufferedImage(optimizedDimensions.getWidth(), optimizedDimensions.getHeight(), BufferedImage.TYPE_INT_RGB);
+
+        Graphics2D graphics = image.createGraphics();
+        graphics.setPaint(Color.white);
+        graphics.fill(new Rectangle2D.Float(0, 0, optimizedDimensions.getWidth(), optimizedDimensions.getHeight()));
+        graphics.scale(scale_factor, scale_factor);
+        htmlComponent.print(graphics);
+        graphics.dispose();
+        return image;
+    }
+
+    public static BufferedImage scaleHtmlToImage(byte[] htmlBytes, Dimensions dimensions) throws UnsupportedEncodingException {
+        JEditorPane htmlComponent = new JEditorPane("text/html", new String(htmlBytes, StandardCharsets.UTF_8));
+        Dimension preferredSize = htmlComponent.getPreferredSize();
+        int width = preferredSize.width;
+        double ratio = ((double) width) / dimensions.getWidth(); // determine the ratio between the actual width and the expected width
+        int height = (int) (ratio * dimensions.getHeight()); // use that ratio to set the height (ignoring actual height)
+        htmlComponent.setSize(width, height); // this html may be much "longer" proportionally, so we "fit" it to the expected page or thumbnail size
+
+        return htmlToImage(htmlComponent, new Dimensions(width, height));
     }
 }

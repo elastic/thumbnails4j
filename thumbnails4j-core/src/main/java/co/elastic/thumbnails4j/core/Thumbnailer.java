@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface Thumbnailer {
 
-    public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions);
-    public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions);
+    public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException;
+    public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) throws ThumbnailingException;
 }
