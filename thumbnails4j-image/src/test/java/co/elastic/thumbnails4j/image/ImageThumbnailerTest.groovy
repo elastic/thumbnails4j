@@ -18,13 +18,15 @@ class ImageThumbnailerTest extends Specification {
         def output = thumbnailer.getThumbnails(inputFile, dimensions)
         ByteArrayOutputStream baos = new ByteArrayOutputStream()
         ImageIO.write(output[0], "png", baos)
-        byte[] bytes = baos.toByteArray()
+        byte[] actualBytes = baos.toByteArray()
+        byte[] expectedBytes = thumbnail.getBytes()
 
         then:
         output.size() == 1
         output[0].getWidth() == 85
         output[0].getHeight() == 100
-        thumbnail.getBytes() == bytes
+        actualBytes.size() == expectedBytes.size()
+        actualBytes == expectedBytes
 
     }
 }
