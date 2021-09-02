@@ -22,6 +22,13 @@
             <artifactId>thumbnails4j-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+
+        <!-- test dependencies -->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
