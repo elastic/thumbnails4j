@@ -4,12 +4,16 @@ public class Dimensions {
     public int x;
     public int y;
 
-    public Dimensions(int x, int y){
-        this.x = x;
-        this.y = y;
+    public Dimensions(int width, int height){
+        this.x = width;
+        this.y = height;
     }
 
     public int getX() {
+        return x;
+    }
+
+    public int getWidth() {
         return x;
     }
 
@@ -17,12 +21,24 @@ public class Dimensions {
         this.x = x;
     }
 
+    public void setWidth(int width) {
+        this.x = width;
+    }
+
     public int getY() {
+        return y;
+    }
+
+    public int getHeight() {
         return y;
     }
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setHeight(int height) {
+        this.y = height;
     }
 
     @Override
