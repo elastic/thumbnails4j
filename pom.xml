@@ -24,11 +24,16 @@
             <name>Sean Story</name>
             <url>www.seanjstory.com</url>
         </developer>
+        <developer>
+            <id>adam-harwood</id>
+            <name>Adam Harwood</name>
+            <url>https://github.com/adam-harwood</url>
+        </developer>
     </developers>
 
     <modules>
-        <module>thumbnails4j-image</module>
         <module>thumbnails4j-core</module>
+        <module>thumbnails4j-image</module>
         <module>thumbnails4j-doc</module>
         <module>thumbnails4j-docx</module>
     </modules>
