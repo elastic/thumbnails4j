@@ -123,4 +123,11 @@ public class ThumbnailUtils {
 
         return htmlToImage(htmlComponent, new Dimensions(width, height));
     }
+
+    public static BufferedImage clipHtmlToImage(byte[] htmlBytes, Dimensions dimensions){
+        JEditorPane htmlComponent = new JEditorPane("text/html", new String(htmlBytes, StandardCharsets.UTF_8));
+        Dimension preferredSize = htmlComponent.getPreferredSize();
+        htmlComponent.setSize(preferredSize.width, preferredSize.height);
+        return htmlToImage(htmlComponent, dimensions);
+    }
 }
