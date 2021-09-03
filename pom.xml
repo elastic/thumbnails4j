@@ -37,6 +37,7 @@
         <module>thumbnails4j-doc</module>
         <module>thumbnails4j-docx</module>
         <module>thumbnails4j-pdf</module>
+        <module>thumbnails4j-pptx</module>
     </modules>
 
     <properties>
