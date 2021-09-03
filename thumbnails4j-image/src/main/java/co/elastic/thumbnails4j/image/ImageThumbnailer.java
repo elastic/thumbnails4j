@@ -8,19 +8,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReadParam;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ImageThumbnailer implements Thumbnailer {
+    public static int MAX_READ_MULTIPLIER = 4;
+    private static final Logger logger = LoggerFactory.getLogger(ImageThumbnailer.class);
 
-    private static Logger logger = LoggerFactory.getLogger(ImageThumbnailer.class);
 
-
-    private int imageType;
+    private final int imageType;
     public ImageThumbnailer(String thumbnailType){
         if (thumbnailType.equalsIgnoreCase("png")){
             this.imageType = BufferedImage.TYPE_INT_ARGB;
@@ -42,13 +47,7 @@ public class ImageThumbnailer implements Thumbnailer {
     private List<BufferedImage> getThumbnailsHelper(Object input, List<Dimensions> dimensions) throws ThumbnailingException {
         BufferedImage image;
         try {
-            if (input instanceof File) {
-                image = ImageIO.read((File) input);
-            } else if (input instanceof InputStream) {
-                image = ImageIO.read((InputStream) input);
-            } else {
-                throw new IllegalArgumentException("Unexpected input class: " + input.getClass().getSimpleName());
-            }
+            image = imageAtMost(input, maxImageReadSize());
         } catch (IOException e) {
             logger.error("Failed to read image from file {}", input);
             logger.error("With stacktrace: ", e);
@@ -59,5 +58,29 @@ public class ImageThumbnailer implements Thumbnailer {
             output.add(ThumbnailUtils.scaleImage(image, singleDimension, imageType));
         }
         return output;
+    }
+
+    private BufferedImage imageAtMost(Object input, Dimensions dimensions) throws IOException, ThumbnailingException {
+        try (ImageInputStream stream = ImageIO.createImageInputStream(input)) {
+            Iterator<ImageReader> readers = ImageIO.getImageReaders(stream);
+            if (!readers.hasNext()) {
+                throw new ThumbnailingException("Image stream contained no images");
+            }
+            ImageReader reader = readers.next();
+            reader.setInput(stream);
+            ImageReadParam param = reader.getDefaultReadParam();
+            param.setSourceRegion(new Rectangle(0, 0, dimensions.getWidth(), dimensions.getHeight()));
+
+            BufferedImage image = reader.read(0, param);
+            reader.dispose();
+            return image;
+        }
+    }
+
+    private static Dimensions maxImageReadSize(){
+        return new Dimensions(
+                ThumbnailUtils.getMaxInMemoryBuffer().getWidth() * MAX_READ_MULTIPLIER,
+                ThumbnailUtils.getMaxInMemoryBuffer().getHeight() * MAX_READ_MULTIPLIER
+        );
     }
 }

@@ -7,7 +7,7 @@ import javax.imageio.ImageIO
 
 class ImageThumbnailerTest extends Specification {
 
-    def "test thumbnailing"() {
+    def "test image thumbnailing"() {
         setup:
         File inputFile = new File("src/test/resources/test-input.png")
         File thumbnail = new File("src/test/resources/test-output.png")
