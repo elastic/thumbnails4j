@@ -11,7 +11,7 @@ class ImageThumbnailerTest extends Specification {
         setup:
         File inputFile = new File("src/test/resources/test-input.png")
         File thumbnail = new File("src/test/resources/test-output.png")
-        def thumbnailer = new ImageThumbnailer()
+        def thumbnailer = new ImageThumbnailer('png')
         def dimensions = [new Dimensions(100,100)]
 
         when:

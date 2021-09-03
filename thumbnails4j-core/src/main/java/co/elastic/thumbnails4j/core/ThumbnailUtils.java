@@ -34,6 +34,10 @@ public class ThumbnailUtils {
      * @return The scaled image
      */
     public static BufferedImage scaleImage(BufferedImage image, Dimensions dimensions){
+        return scaleImage(image, dimensions, image.getType());
+    }
+
+    public static BufferedImage scaleImage(BufferedImage image, Dimensions dimensions, int imageType){
         int scaledWidth = image.getWidth();
         int scaledHeight = image.getHeight();
 
@@ -50,7 +54,7 @@ public class ThumbnailUtils {
             scaledHeight = scaleDimension(scaledHeight, targetHeight);
 
             // redraw the image with the new width/height for this iteration
-            BufferedImage temp = new BufferedImage(scaledWidth, scaledHeight, image.getType());
+            BufferedImage temp = new BufferedImage(scaledWidth, scaledHeight, imageType);
             Graphics2D graphics = temp.createGraphics();
             graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             graphics.drawImage(image, 0, 0, scaledWidth, scaledHeight, null);

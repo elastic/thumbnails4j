@@ -19,6 +19,16 @@ public class ImageThumbnailer implements Thumbnailer {
 
     private static Logger logger = LoggerFactory.getLogger(ImageThumbnailer.class);
 
+
+    private int imageType;
+    public ImageThumbnailer(String thumbnailType){
+        if (thumbnailType.equalsIgnoreCase("png")){
+            this.imageType = BufferedImage.TYPE_INT_ARGB;
+        } else {
+            this.imageType = BufferedImage.TYPE_INT_RGB;
+        }
+    }
+
     @Override
     public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
         return getThumbnailsHelper(input, dimensions);
@@ -46,7 +56,7 @@ public class ImageThumbnailer implements Thumbnailer {
         }
         List<BufferedImage> output = new ArrayList<>();
         for (Dimensions singleDimension: dimensions) {
-            output.add(ThumbnailUtils.scaleImage(image, singleDimension));
+            output.add(ThumbnailUtils.scaleImage(image, singleDimension, imageType));
         }
         return output;
     }
