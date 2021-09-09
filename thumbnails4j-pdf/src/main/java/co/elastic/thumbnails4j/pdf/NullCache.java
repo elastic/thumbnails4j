@@ -17,7 +17,9 @@
  *  * specific language governing permissions and limitations
  *  * under the License.
  *
- */.elastic.thumbnails4j.pdf;
+ */
+
+package co.elastic.thumbnails4j.pdf;
 
 import org.apache.pdfbox.cos.COSObject;
 import org.apache.pdfbox.pdmodel.DefaultResourceCache;
