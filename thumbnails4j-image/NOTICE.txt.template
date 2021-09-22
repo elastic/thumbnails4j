@@ -6,6 +6,4 @@ This product includes software developed by The Apache Software Foundation (http
 Third party libraries used by thumbnails4j-image:
 =================================================
 
-  SLF4J API Module under MIT License
-  thumbnails4j-core under The Apache Software License, Version 2.0
-
+#GENERATED_NOTICES#
