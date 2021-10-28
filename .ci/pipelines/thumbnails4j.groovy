@@ -20,7 +20,7 @@
  */
 
 // Loading the shared lib
-@Library('estc') _
+@Library(['estc', 'entsearch']) _
 
 // Calling the pipeline against the `rubocop` stage
 eshPipeline(
