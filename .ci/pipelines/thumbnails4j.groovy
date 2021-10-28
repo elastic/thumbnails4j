@@ -26,6 +26,7 @@
 eshPipeline(
     timeout: 45,
     project_name: 'Thumbnails4j',
+    repository: 'thumbnails4j',
     stage_name: 'Thumbnails4j Unit Tests',
     stages: [
       [
