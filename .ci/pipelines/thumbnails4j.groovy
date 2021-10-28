@@ -33,7 +33,7 @@ eshPipeline(
           name: 'Maven Build',
           type: 'sh',
           label: 'Maven Build',
-          script: 'mvn clean verify',
+          script: './mvnw clean verify',
           match_on_all_branches: true,
       ]
     ],
