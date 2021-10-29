@@ -26,13 +26,14 @@
 eshPipeline(
     timeout: 45,
     project_name: 'Thumbnails4j',
+    repository: 'thumbnails4j',
     stage_name: 'Thumbnails4j Unit Tests',
     stages: [
       [
           name: 'Maven Build',
           type: 'sh',
           label: 'Maven Build',
-          script: 'mvn clean verify',
+          script: './mvnw clean verify',
           match_on_all_branches: true,
       ]
     ],
