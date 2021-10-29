@@ -18,3 +18,8 @@ To build locally, run:
 ```bash
 mvn clean install
 ```
+
+### Contributing
+Feel free to submit PRs! CI must pass in order for us to consider a contribution.
+
+More guidance to come.
