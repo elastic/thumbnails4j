@@ -21,23 +21,25 @@
 
 
 // Loading the shared lib
-@Library('estc') _
+@Library(['estc', 'entsearch']) _
 
-pipeline {
-    agent { label('linux && immutable') }
-    stages {
-        stage('Setup') {
-            steps {
-                estcGithubCheckout(repository: 'thumbnails4j',
-                        revision: 'main')
-            }
-        }
-        stage ('Build and Test') {
-            steps {
+eshPipeline(
+    timeout: 45,
+    project_name: 'Thumbnails4j',
+    repository: 'thumbnails4j',
+    stage_name: 'Thumbnails4j Unit Tests',
+    stages: [
+        [
+            name: 'Maven Build',
+            type: 'script',
+            label: 'Maven Build',
+            script: {
                 withMaven {
-                    sh "./mvnw clean verify"
-                } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs reports
-            }
-        }
-    }
-}
+                    sh './mvnw clean verify'
+                }
+            },
+            match_on_all_branches: true,
+        ]
+    ],
+    slack_channel: 'workplace-search-connectors'
+)
