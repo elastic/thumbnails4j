@@ -19,23 +19,14 @@
  *
  */
 
-// Loading the shared lib
-@Library(['estc', 'entsearch']) _
-
-// Calling the pipeline against the `rubocop` stage
-eshPipeline(
-    timeout: 45,
-    project_name: 'Thumbnails4j',
-    repository: 'thumbnails4j',
-    stage_name: 'Thumbnails4j Unit Tests',
-    stages: [
-      [
-          name: 'Maven Build',
-          type: 'sh',
-          label: 'Maven Build',
-          script: './mvnw clean verify',
-          match_on_all_branches: true,
-      ]
-    ],
-    slack_channel: 'workplace-search-connectors'
-)
+pipeline {
+    agent any
+    stages {
+        stage ('Build and Test') {
+            git url: 'https://github.com/elastic/thumbnails4j'
+            withMaven {
+                sh "mvn clean verify"
+            } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs reports
+        }
+    }
+}
