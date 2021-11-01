@@ -35,7 +35,7 @@ pipeline {
         stage ('Build and Test') {
             steps {
                 withMaven {
-                    sh "mvn clean verify"
+                    sh "./mvnw clean verify"
                 } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs reports
             }
         }
