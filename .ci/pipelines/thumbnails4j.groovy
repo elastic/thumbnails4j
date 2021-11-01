@@ -19,14 +19,25 @@
  *
  */
 
+
+// Loading the shared lib
+@Library('estc') _
+
 pipeline {
-    agent any
+    agent { label('linux && immutable') }
     stages {
+        stage('Setup') {
+            steps {
+                estcGithubCheckout(repository: 'thumbnails4j',
+                        revision: 'seanstory/expand-ci-pipeline')
+            }
+        }
         stage ('Build and Test') {
-            git url: 'https://github.com/elastic/thumbnails4j'
-            withMaven {
-                sh "mvn clean verify"
-            } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs reports
+            steps {
+                withMaven {
+                    sh "mvn clean verify"
+                } // withMaven will discover the generated Maven artifacts, JUnit Surefire & FailSafe reports and FindBugs reports
+            }
         }
     }
 }
