@@ -29,7 +29,7 @@ pipeline {
         stage('Setup') {
             steps {
                 estcGithubCheckout(repository: 'thumbnails4j',
-                        revision: 'seanstory/expand-ci-pipeline')
+                        revision: 'main')
             }
         }
         stage ('Build and Test') {
