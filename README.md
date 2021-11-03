@@ -1,5 +1,5 @@
 # thumbnails4j
-Free and Open project for generating file thumbnails with the JVM
+Open source project for generating file thumbnails with the JVM
 
 ### Example usage
 
@@ -14,6 +14,7 @@ BufferedImage output = thumbnailer.getThumbnails(input, outputDimensions).get(0)
 ```
 
 ### Building
+
 To build locally, run:
 ```bash
 mvn clean install
