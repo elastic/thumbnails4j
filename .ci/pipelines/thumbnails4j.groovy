@@ -21,7 +21,7 @@
 
 
 // Loading the shared lib
-@Library(['estc', 'entsearch']) _
+@Library(['estc', 'entsearch@tarekziade/NoSuchMethod']) _
 
 eshPipeline(
     timeout: 45,
