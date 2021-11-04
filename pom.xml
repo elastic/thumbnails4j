@@ -6,7 +6,7 @@
 
     <groupId>co.elastic.thumbnails4j</groupId>
     <artifactId>thumbnails4j</artifactId>
-    <description>Free and Open project for generating file thumbnails with the JVM</description>
+    <description>open source project for generating file thumbnail images with the JVM</description>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
 
@@ -19,7 +19,6 @@
         <url>https://www.elastic.co</url>
     </organization>
 
-    <description>Thumbnail image generation for the JVM</description>
     <url>https://github.com/elastic/thumbnails4j</url>
 
     <licenses>
