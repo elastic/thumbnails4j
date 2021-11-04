@@ -32,32 +32,57 @@ import java.awt.image.BufferedImage;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * A utility class containing common methods used for generating thumbnails, regardless of the source document type.
+ */
 public class ThumbnailUtils {
 
     private static Dimensions MAX_IN_MEMORY_BUFFER = new Dimensions(310, 430);
 
+    /**
+     * @return The largest allowed {@link Dimensions} to attempt to write an image into. By default, 310 pixels by 430 pixels
+     */
     public static Dimensions getMaxInMemoryBuffer() {
         return MAX_IN_MEMORY_BUFFER;
     }
 
+    /**
+     * @param maxInMemoryBuffer the new maximum {@link Dimensions} to allow an image to be written into.
+     */
     public static void setMaxInMemoryBuffer(Dimensions maxInMemoryBuffer) {
         MAX_IN_MEMORY_BUFFER = maxInMemoryBuffer;
     }
 
     /**
+     * Scale the provided image to the provided dimensions.
+     *
      * This algorithm is based off: https://community.oracle.com/docs/DOC-983611
      * Fundamentally, it scales the images down progressively by halves, until
      * it reaches the desired width/height. By doing this, more of the original
      * image quality is preserved.
      *
-     * @param image
-     * @param dimensions
-     * @return The scaled image
+     * @param image the image to scale
+     * @param dimensions the dimensions to scale the image to
+     * @return The scaled image. Note the scaled image will be of the same image type as the provided image.
      */
     public static BufferedImage scaleImage(BufferedImage image, Dimensions dimensions){
         return scaleImage(image, dimensions, image.getType());
     }
 
+    /**
+     * Scale the provided image to the provided dimensions.
+     *
+     * This algorithm is based off: https://community.oracle.com/docs/DOC-983611
+     * Fundamentally, it scales the images down progressively by halves, until
+     * it reaches the desired width/height. By doing this, more of the original
+     * image quality is preserved.
+     *
+     * @param image the image to scale
+     * @param dimensions the dimensions to scale the image to
+     * @param imageType the {@link BufferedImage} type (for example, {@link BufferedImage#TYPE_INT_RGB} the resulting
+     *                  image should be written as.
+     * @return The scaled image of the specified type.
+     */
     public static BufferedImage scaleImage(BufferedImage image, Dimensions dimensions, int imageType){
         int scaledWidth = image.getWidth();
         int scaledHeight = image.getHeight();
@@ -86,16 +111,13 @@ public class ThumbnailUtils {
         return image;
     }
 
-    public static int scaleDimension(int value, int targetValue){
-        if (value > targetValue) {
-            return Math.max(value / 2, targetValue);
-        } else if (value < targetValue) {
-            return Math.min(value * 2, targetValue);
-        } else {
-            return value;
-        }
-    }
-
+    /**
+     * Given {@link ThumbnailUtils#getMaxInMemoryBuffer()}, resize the provided dimensions, while maintaining aspect
+     * ratio, to ensure memory requirements are not exceeded.
+     * @param dimensions the initial dimensions
+     * @return the input dimensions if they would fit it the max-memory buffer. Otherwise, a scaled-down version of the
+     * input dimensions that will fit in the max-memory buffer.
+     */
     public static Dimensions memoryOptimiseDimension(Dimensions dimensions){
         if(dimensions.does_fit_inside(MAX_IN_MEMORY_BUFFER)){
             return dimensions;
@@ -116,6 +138,10 @@ public class ThumbnailUtils {
         }
     }
 
+    /**
+     * @return a transformer capable of reading an XHTML DOM
+     * @throws TransformerConfigurationException
+     */
     public static Transformer getTransformerForXhtmlDOM() throws TransformerConfigurationException {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
@@ -124,6 +150,12 @@ public class ThumbnailUtils {
         return transformer;
     }
 
+    /**
+     * Renter an image from an HTML UI component
+     * @param htmlComponent a {@link JEditorPane} that contains HTML. See also {@link ThumbnailUtils#scaleHtmlToImage(byte[], co.elastic.thumbnails4j.core.Dimensions)}
+     * @param dimensions the desired dimensions of the output image
+     * @return the rendered image
+     */
     public static BufferedImage htmlToImage(JEditorPane htmlComponent, Dimensions dimensions){
         Dimensions optimizedDimensions = memoryOptimiseDimension(dimensions);
         double scale_factor = ((double) optimizedDimensions.getWidth()) / dimensions.getWidth();
@@ -138,6 +170,13 @@ public class ThumbnailUtils {
         return image;
     }
 
+    /**
+     * Render an image from raw HTML
+     * @param htmlBytes the raw html
+     * @param dimensions the desired dimensions of the output image
+     * @return the rendered image
+     * @throws UnsupportedEncodingException if the raw HTML can not be read as a UTF-8 {@link String}
+     */
     public static BufferedImage scaleHtmlToImage(byte[] htmlBytes, Dimensions dimensions) throws UnsupportedEncodingException {
         JEditorPane htmlComponent = new JEditorPane("text/html", new String(htmlBytes, StandardCharsets.UTF_8));
         Dimension preferredSize = htmlComponent.getPreferredSize();
@@ -149,10 +188,28 @@ public class ThumbnailUtils {
         return htmlToImage(htmlComponent, new Dimensions(width, height));
     }
 
+    /**
+     * Crop the upper-left {@code dimensions}-worth of an image that would be rendered from raw html.
+     * This is particularly useful when your HTML describes a very large display, and a zoomed-out view of such a
+     * display would be meaningless. Sometimes, its better to just show a smaller, zoomed-in, sample of the document.
+     * @param htmlBytes the raw HTML
+     * @param dimensions the desired dimensions to keep in the crop/clip.
+     * @return the clipped image resulting from rendering just a portion of the raw HTML.
+     */
     public static BufferedImage clipHtmlToImage(byte[] htmlBytes, Dimensions dimensions){
         JEditorPane htmlComponent = new JEditorPane("text/html", new String(htmlBytes, StandardCharsets.UTF_8));
         Dimension preferredSize = htmlComponent.getPreferredSize();
         htmlComponent.setSize(preferredSize.width, preferredSize.height);
         return htmlToImage(htmlComponent, dimensions);
+    }
+
+    private static int scaleDimension(int value, int targetValue){
+        if (value > targetValue) {
+            return Math.max(value / 2, targetValue);
+        } else if (value < targetValue) {
+            return Math.min(value * 2, targetValue);
+        } else {
+            return value;
+        }
     }
 }
