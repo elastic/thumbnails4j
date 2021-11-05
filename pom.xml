@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>co.elastic</groupId>
+    <groupId>co.elastic.thumbnails4j</groupId>
     <artifactId>thumbnails4j</artifactId>
     <description>Free and Open project for generating file thumbnails with the JVM</description>
     <packaging>pom</packaging>
