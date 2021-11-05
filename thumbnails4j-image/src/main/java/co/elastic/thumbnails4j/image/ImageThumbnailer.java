@@ -41,12 +41,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * A {@link Thumbnailer} for image file formats. As the inputs are images to start with, this thumbnailer is mostly
+ * concerned with scaling the input images.
+ */
 public class ImageThumbnailer implements Thumbnailer {
     public static int MAX_READ_MULTIPLIER = 4;
     private static final Logger logger = LoggerFactory.getLogger(ImageThumbnailer.class);
 
 
     private final int imageType;
+
+    /**
+     * Creates a new {@link ImageThumbnailer} that generates thumbnails of the provided image type.
+     * @param thumbnailType what type/format of images this thumbnailer should write. {@code "png"} will produce images
+     *                      with opacity. {@code "jpg"} will produce solid images.
+     */
     public ImageThumbnailer(String thumbnailType){
         if (thumbnailType.equalsIgnoreCase("png")){
             this.imageType = BufferedImage.TYPE_INT_ARGB;

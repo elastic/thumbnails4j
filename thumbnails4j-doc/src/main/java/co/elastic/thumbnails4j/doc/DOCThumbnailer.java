@@ -46,6 +46,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A {@link Thumbnailer} for <a href="https://en.wikipedia.org/wiki/Doc_(computing)">Microsoft Word Binary File Formatted</a>
+ * documents. These files typically end in a {@code .doc} extension. This is not intended to support files with a
+ * {@code .docx} extension.
+ *
+ * The provided document will first be converted to HTML before it is rendered. This means that more complex formatting
+ * that cannot be expressed in raw HTML will be lost (non-standard fonts, spacing, images, etc).
+ */
 public class DOCThumbnailer implements Thumbnailer {
 
     private static Logger logger = LoggerFactory.getLogger(DOCThumbnailer.class);

@@ -42,6 +42,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A {@link Thumbnailer} for legacy <a href="https://en.wikipedia.org/wiki/Microsoft_Excel">Microsoft Excel</a> formatted
+ * documents. These documents often have a {@code .xls} extension. This {@link Thumbnailer} is not intended for documents
+ * with {@code .xlsx} extensions.
+ *
+ * {@link XLSThumbnailer} will attempt to clip the upper-right portion of the spreadsheet, and generate an image from that
+ * limited view. This prevents un-identifiable views of spreadsheets with many rows and/or columns, by avoiding attemping
+ * to show every cell in the thumbnail. The size of this view is controlled by {@link ThumbnailUtils#getMaxInMemoryBuffer()}.
+ */
 public class XLSThumbnailer implements Thumbnailer {
     Logger logger = LoggerFactory.getLogger(XLSThumbnailer.class);
 

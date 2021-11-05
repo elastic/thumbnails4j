@@ -35,6 +35,15 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
+/**
+ * A {@link Thumbnailer} for <a href="https://en.wikipedia.org/wiki/Microsoft_Excel">Microsoft Excel</a> formatted
+ * documents. These documents often have a {@code .xlsx} extension. This {@link Thumbnailer} is not intended for documents
+ * with {@code .xls} extensions.
+ *
+ * {@link XLSXThumbnailer} will attempt to clip the upper-right portion of the spreadsheet, and generate an image from that
+ * limited view. This prevents un-identifiable views of spreadsheets with many rows and/or columns, by avoiding attemping
+ * to show every cell in the thumbnail. The size of this view is controlled by {@link ThumbnailUtils#getMaxInMemoryBuffer()}.
+ */
 public class XLSXThumbnailer implements Thumbnailer {
 
     Logger logger = LoggerFactory.getLogger(XLSXThumbnailer.class);
@@ -59,7 +68,7 @@ public class XLSXThumbnailer implements Thumbnailer {
         }
     }
 
-    public List<BufferedImage> getThumbnails(Workbook workbook, List<Dimensions> dimensions) {
+    private List<BufferedImage> getThumbnails(Workbook workbook, List<Dimensions> dimensions) {
         XlsxToHtmlSerializer serializer = new XlsxToHtmlSerializer(workbook);
         byte[] htmlBytes =  serializer.getHtml();
         BufferedImage image = ThumbnailUtils.clipHtmlToImage(htmlBytes, ThumbnailUtils.getMaxInMemoryBuffer());
