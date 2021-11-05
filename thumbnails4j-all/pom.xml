@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>thumbnails4j</artifactId>
-        <groupId>co.elastic</groupId>
+        <groupId>co.elastic.thumbnails4j</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -18,42 +18,42 @@
 
     <dependencies>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-doc</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-docx</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-image</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-pdf</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-pptx</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-xls</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>co.elastic</groupId>
+            <groupId>co.elastic.thumbnails4j</groupId>
             <artifactId>thumbnails4j-xlsx</artifactId>
             <version>${project.version}</version>
         </dependency>
