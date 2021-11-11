@@ -19,23 +19,27 @@
  *
  */
 
+
 // Loading the shared lib
 @Library(['estc', 'entsearch']) _
 
-// Calling the pipeline against the `rubocop` stage
 eshPipeline(
     timeout: 45,
     project_name: 'Thumbnails4j',
     repository: 'thumbnails4j',
     stage_name: 'Thumbnails4j Unit Tests',
     stages: [
-      [
-          name: 'Maven Build',
-          type: 'sh',
-          label: 'Maven Build',
-          script: './mvnw clean verify',
-          match_on_all_branches: true,
-      ]
+        [
+            name: 'Maven Build',
+            type: 'script',
+            label: 'Maven Build',
+            script: {
+                withMaven {
+                    sh './mvnw clean verify'
+                }
+            },
+            match_on_all_branches: true,
+        ]
     ],
     slack_channel: 'workplace-search-connectors'
 )
