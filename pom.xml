@@ -72,6 +72,8 @@
         <poi.version>4.1.2</poi.version>
         <xdocreport.version>2.0.2</xdocreport.version>
         <pdfbox.version>2.0.24</pdfbox.version>
+        <jakarta.version>2.3.2</jakarta.version>
+        <jaxb.version>2.3.2</jaxb.version>
 
         <groovy.version>3.0.8</groovy.version>
         <spock.version>2.0-groovy-3.0</spock.version>
@@ -118,6 +120,16 @@
                 <groupId>org.apache.pdfbox</groupId>
                 <artifactId>pdfbox</artifactId>
                 <version>${pdfbox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>${jaxb.version}</version>
             </dependency>
 
             <!-- test dependencies -->
@@ -168,6 +180,18 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>jakarta.xml.bind</groupId>
+                        <artifactId>jakarta.xml.bind-api</artifactId>
+                        <version>${jakarta.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.glassfish.jaxb</groupId>
+                        <artifactId>jaxb-runtime</artifactId>
+                        <version>${jaxb.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
