@@ -9,8 +9,8 @@ import co.elastic.thumbnails4j.pdf.PDFThumbnailer;
 
 File input = new File("/path/to/my_file.pdf");
 Thumbnailer thumbnailer = new PDFThumbnailer();
-Dimensions outputDimensions = new Dimensions(100, 100);
-BufferedImage output = thumbnailer.getThumbnails(input, Collections.singletonList(outputDimensions)).get(0);
+List<Dimensions> outputDimensions = Collections.singletonList(new Dimensions(100, 100));
+BufferedImage output = thumbnailer.getThumbnails(input, outputDimensions).get(0);
 ```
 
 ### Building
