@@ -21,12 +21,23 @@
 
 package co.elastic.thumbnails4j.core;
 
+/**
+ * A generic {@link Exception} used for wrapping various exceptions that may occur while generating thumbnails.
+ */
 public class ThumbnailingException extends Exception {
 
+    /**
+     * Create a {@link ThumbnailingException} that wraps another {@link Exception}
+     * @param e the other exception to wrap
+     */
     public ThumbnailingException(Exception e) {
         super(e);
     }
 
+    /**
+     * Create a {@link ThumbnailingException} that has a specific exception message
+     * @param msg the message to be contained by this exception
+     */
     public ThumbnailingException(String msg) {
         super(msg);
     }

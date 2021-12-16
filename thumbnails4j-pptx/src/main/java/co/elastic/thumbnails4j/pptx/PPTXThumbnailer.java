@@ -36,6 +36,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A {@link Thumbnailer} for generating thumbnails from
+ * <a href="https://en.wikipedia.org/wiki/Office_Open_XML">Open Offic XML Presentation</a> formatted documents. These
+ * documents commonly end in a {@code .pptx} extension. This is not intended to generate thumbnails for documents with
+ * a {@code .ppt} extension.
+ *
+ * {@link PPTXThumbnailer} generates a rendering of the first slide of the presentation, scaled as specified.
+ */
 public class PPTXThumbnailer implements Thumbnailer {
     Logger logger = LoggerFactory.getLogger(PPTXThumbnailer.class);
 

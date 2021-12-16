@@ -6,9 +6,20 @@
 
     <groupId>co.elastic.thumbnails4j</groupId>
     <artifactId>thumbnails4j</artifactId>
-    <description>Free and Open project for generating file thumbnails with the JVM</description>
+    <description>open source project for generating file thumbnail images with the JVM</description>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
+
+    <name>${project.groupId}:${project.artifactId}</name>
+
+    <inceptionYear>2021</inceptionYear>
+
+    <organization>
+        <name>Elastic Inc.</name>
+        <url>https://www.elastic.co</url>
+    </organization>
+
+    <url>https://github.com/elastic/thumbnails4j</url>
 
     <licenses>
         <license>
@@ -18,7 +29,20 @@
         </license>
     </licenses>
 
+    <scm>
+        <connection>scm:git:git@github.com:elastic/thumbnails4j.git</connection>
+        <developerConnection>scm:git:git@github.com:elastic/thumbnails4j.git</developerConnection>
+        <url>https://github.com/elastic/thumbnails4j</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <developers>
+        <developer>
+            <name>Elastic</name>
+            <url>https://discuss.elastic.co/c/workplace-search</url>
+            <organization>Elastic Inc.</organization>
+            <organizationUrl>https://www.elastic.co</organizationUrl>
+        </developer>
         <developer>
             <id>seanstory</id>
             <name>Sean Story</name>
@@ -195,8 +219,103 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
             </plugin>
+
+            <!-- requirements for releasing to maven central -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.5</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <releaseProfiles>gpg</releaseProfiles>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Sign all artifacts (requires gpg installation). -->
+        <profile>
+            <id>gpg</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
 
 </project>

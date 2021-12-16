@@ -37,6 +37,17 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A {@link Thumbnailer} for <a href="https://en.wikipedia.org/wiki/Office_Open_XML">Office Open XML Formatted</a>
+ * documents. These files typically end in a {@code .docx} extension. This is not intended to support files with a
+ * {@code .doc} extension.
+ *
+ * The Office Open XML specification allows a thumbnail image to be defined and included in the file binary. If it is
+ * present, this image will be returned (with any appropriate scaling).
+ *
+ * Otherwise, the provided document will first be converted to XHTML before it is rendered. This means that more complex
+ * formatting that cannot be expressed in raw XHTML will be lost (non-standard fonts, spacing, images, etc).
+ */
 public class DOCXThumbnailer implements Thumbnailer {
     Logger logger = LoggerFactory.getLogger(DOCXThumbnailer.class);
 

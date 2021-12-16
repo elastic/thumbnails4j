@@ -44,6 +44,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A {@link Thumbnailer} for <a href="https://en.wikipedia.org/wiki/PDF">Portable Document Formatted (PDF)</a> documents.
+ * These documents will often have a {@code .pdf} file extension.
+ *
+ * {@link PDFThumbnailer} attempts to find the first image in the format that actually fits on a page, and returns that
+ * scaled image. This can be confusing if you attempt to thumbnail a poorly built PDF whose first page has a background
+ * image that is larger than the size of the PDF's first page. However, this approach avoids Memory issues that can occur
+ * when attempting to read undisplayably-large images.
+ */
 public class PDFThumbnailer implements Thumbnailer {
     private static Logger logger = LoggerFactory.getLogger(PDFThumbnailer.class);
 
