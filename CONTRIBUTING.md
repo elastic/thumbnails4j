@@ -66,6 +66,7 @@ We will create branches for all minor releases.
 8. Manually [trigger a release](https://internal-ci.elastic.co/job/elastic+thumbnails4j+release/) from the new minor release branch (`1.1` in this example).
 9. Even after the build goes green, artifacts may take 30 minutes or so to appear in [https://repo1.maven.org/maven2/co/elastic/thumbnails4j](https://repo1.maven.org/maven2/co/elastic/thumbnails4j)
 10. In the mean time, verify the automatic (or manually deploy) [snapshot builds](https://internal-ci.elastic.co/job/elastic+thumbnails4j+deploy-snapshot/) for the new minor patch SNAPSHOT (`1.1.1-SNAPSHOT` in this example) and the new main SNAPSHOT (`1.2.0-SNAPSHOT` in this example)
+11. Once the release artifacts are available from Maven Central, [create a new Github Release](https://github.com/elastic/thumbnails4j/releases/new) from the new tag and artifacts. 
 
 ##### Publish a patch
 (Example, publish 1.0.1)
@@ -75,6 +76,7 @@ We will create branches for all minor releases.
 3. Manually [trigger a release](https://internal-ci.elastic.co/job/elastic+thumbnails4j+release/) from the minor release branch (`1.0` in this example).
 4. Even after the build goes green, artifacts may take 30 minutes or so to appear in [https://repo1.maven.org/maven2/co/elastic/thumbnails4j](https://repo1.maven.org/maven2/co/elastic/thumbnails4j)
 5. In the mean time, verify the automatic (or manually deploy) [snapshot build](https://internal-ci.elastic.co/job/elastic+thumbnails4j+deploy-snapshot/) for the new patch SNAPSHOT (`1.0.2-SNAPSHOT` in this example)
+6. Once the release artifacts are available from Maven Central, [create a new Github Release](https://github.com/elastic/thumbnails4j/releases/new) from the new tag and artifacts.
 
 
 ### Known usages
