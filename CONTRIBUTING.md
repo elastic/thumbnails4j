@@ -1,3 +1,4 @@
+![thumbnails4j](docs/images/thumbnails4j-color-logomark.png)
 # thumbnails4j Contributor's Guide
 
 Thank you for your interest in contributing to thumbnails4j!
