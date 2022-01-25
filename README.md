@@ -1,4 +1,4 @@
-![thumbnails4j](docs/images/thumbnails4j-color-logomark.png)
+![thumbnails4j](./docs/images/thumbnails4j-color-logomark.png)
 # thumbnails4j
 Open source project for generating file thumbnails with the JVM
 
