@@ -12,7 +12,6 @@
       - github:
           repo: thumbnails4j
           repo-owner: elastic
-          reference-repo: /var/lib/jenkins/.git-references/thumbnails4j.git
           disable-pr-notifications: true
           branch-discovery: all
           discover-pr-origin: current
