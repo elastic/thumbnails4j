@@ -58,9 +58,7 @@ public class PDFThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
-        PDDocument document;
-        try {
-            document = PDDocument.load(input);
+        try (PDDocument document = PDDocument.load(input)) {
             return getThumbnails(document, dimensions);
         } catch (IOException e) {
             logger.error("Could not load input as PDF: ", e);
@@ -70,10 +68,7 @@ public class PDFThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) throws ThumbnailingException {
-
-        PDDocument document;
-        try {
-            document = PDDocument.load(input);
+        try (PDDocument document = PDDocument.load(input)) {
             return getThumbnails(document, dimensions);
         } catch (IOException e) {
             logger.error("Could not load input as PDF: ", e);

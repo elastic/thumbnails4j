@@ -240,6 +240,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
+                <configuration>
+                    <!-- to prevent the ForkedBooter process from stealing the window focus on Mac OS -->
+                    <argLine>-Djava.awt.headless=true</argLine>
+                </configuration>
             </plugin>
 
             <!-- requirements for releasing to maven central -->

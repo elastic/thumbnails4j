@@ -60,22 +60,20 @@ public class DOCThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
-        FileInputStream fis;
-        try {
-             fis = new FileInputStream(input);
+        try(FileInputStream fis = new FileInputStream(input)) {
+            return getThumbnails(fis, dimensions);
         } catch (FileNotFoundException e) {
             logger.error("Could not find file {}", input.getAbsolutePath());
             logger.error("With stack: ", e);
             throw new IllegalArgumentException(e);
+        } catch (IOException e) {
+            throw new ThumbnailingException(e);
         }
-        return getThumbnails(fis, dimensions);
     }
 
     @Override
     public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) throws ThumbnailingException {
-        HWPFDocument document;
-        try {
-            document = new HWPFDocument(input);
+        try (HWPFDocument document = new HWPFDocument(input)){
             byte[] htmlBytes = htmlBytesFromDoc(document);
             BufferedImage image = ThumbnailUtils.scaleHtmlToImage(htmlBytes, docPageDimensions(document));
             List<BufferedImage> results = new ArrayList<>();
