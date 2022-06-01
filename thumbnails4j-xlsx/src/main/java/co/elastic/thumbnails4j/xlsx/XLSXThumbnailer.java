@@ -50,8 +50,8 @@ public class XLSXThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
-        try {
-            return getThumbnails(WorkbookFactory.create(input), dimensions);
+        try (Workbook workbook = WorkbookFactory.create(input)) {
+            return getThumbnails(workbook, dimensions);
         } catch (IOException e) {
             logger.error("Failed to parse XLSX: ", e);
             throw new ThumbnailingException(e);
@@ -60,8 +60,8 @@ public class XLSXThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) throws ThumbnailingException {
-        try {
-            return getThumbnails(WorkbookFactory.create(input), dimensions);
+        try (Workbook workbook = WorkbookFactory.create(input)) {
+            return getThumbnails(workbook, dimensions);
         } catch (IOException e) {
             logger.error("Failed to parse XLSX: ", e);
             throw new ThumbnailingException(e);

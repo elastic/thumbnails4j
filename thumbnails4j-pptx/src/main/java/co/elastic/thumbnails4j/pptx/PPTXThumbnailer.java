@@ -49,32 +49,30 @@ public class PPTXThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(input);
+        try (FileInputStream fis = new FileInputStream(input)) {
+            return getThumbnails(fis, dimensions);
         } catch (FileNotFoundException e) {
             logger.error("Could not find file {}", input.getAbsolutePath());
             logger.error("With stack: ", e);
             throw new IllegalArgumentException(e);
+        } catch (IOException e) {
+            throw new ThumbnailingException(e);
         }
-        return getThumbnails(fis, dimensions);
     }
 
     @Override
     public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) throws ThumbnailingException {
-        XMLSlideShow pptx;
-        try {
-            pptx = new XMLSlideShow(input);
+        try (XMLSlideShow pptx = new XMLSlideShow(input)) {
+            BufferedImage image = pptxToImage(pptx);
+            List<BufferedImage> results = new ArrayList<>();
+            for(Dimensions singleDimension: dimensions){
+                results.add(ThumbnailUtils.scaleImage(image, singleDimension));
+            }
+            return results;
         } catch (IOException e) {
             logger.error("Failed to parse PPTX from stream: ", e);
             throw new ThumbnailingException(e);
         }
-        BufferedImage image = pptxToImage(pptx);
-        List<BufferedImage> results = new ArrayList<>();
-        for(Dimensions singleDimension: dimensions){
-            results.add(ThumbnailUtils.scaleImage(image, singleDimension));
-        }
-        return results;
     }
 
     private BufferedImage pptxToImage(XMLSlideShow pptx){
