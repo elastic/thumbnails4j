@@ -1,3 +1,17 @@
+## 🏠/.buildkite/pipeline.yml
+# Primary pipeline for thumbnails4j
+# runs with every commit on a PR or branch
+
+agents:
+  image: "eclipse-temurin:11.0.20_8-jdk"
+  ephemeralStorage: "20G"
+  memory: "4G"
+
+env:
+  CI: "true"
+
 steps:
-  - label: "Placeholder Pipeline"
-    command: echo "Hello!"
+  - label: ":wrench: Maven Build"
+    command: "/bin/bash ./mvnw clean verify"
+    timeout_in_minutes: 45
+
