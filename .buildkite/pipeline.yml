@@ -3,7 +3,7 @@
 # runs with every commit on a PR or branch
 
 agents:
-  image: "eclipse-temurin:11.0.20_8-jdk"
+  image: "docker.elastic.co/swiftype/ent-search-ci-dev-base-20220124:latest"
   ephemeralStorage: "20G"
   memory: "4G"
 
@@ -12,6 +12,5 @@ env:
 
 steps:
   - label: ":wrench: Maven Build"
-    command: "/bin/bash ./mvnw clean verify"
+    command: "./mvnw clean verify"
     timeout_in_minutes: 45
-
