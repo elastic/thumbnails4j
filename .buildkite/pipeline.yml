@@ -1,0 +1,16 @@
+## 🏠/.buildkite/pipeline.yml
+# Primary pipeline for thumbnails4j
+# runs with every commit on a PR or branch
+
+agents:
+  image: "docker.elastic.co/swiftype/ent-search-ci-dev-base-20220124:latest"
+  ephemeralStorage: "20G"
+  memory: "4G"
+
+env:
+  CI: "true"
+
+steps:
+  - label: ":wrench: Maven Build"
+    command: "./mvnw clean verify"
+    timeout_in_minutes: 45
