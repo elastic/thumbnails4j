@@ -7,9 +7,6 @@ agents:
   ephemeralStorage: "20G"
   memory: "4G"
 
-env:
-  CI: "true"
-
 steps:
   - label: ":wrench: Maven Build"
     command: "./mvnw clean verify"
