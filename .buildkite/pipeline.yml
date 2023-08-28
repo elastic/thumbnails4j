@@ -3,7 +3,7 @@
 # runs with every commit on a PR or branch
 
 agents:
-  image: "docker.elastic.co/swiftype/ent-search-ci-dev-base-20220124:latest"
+  image: "docker.elastic.co/ci-agent-images/enterprise-search/thumbnails4j-buildkite-agent"
   ephemeralStorage: "20G"
   memory: "4G"
 
