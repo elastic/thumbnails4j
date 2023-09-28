@@ -26,13 +26,15 @@ spec:
 
 ---
 # yaml-language-server: $schema=https://gist.githubusercontent.com/elasticmachine/988b80dae436cafea07d9a4a460a011d/raw/rre.schema.json
+# Primary pipeline on PR / Commit
+
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
   name: buildkite-pipeline-thumbnails4j
   description: Buildkite Pipeline for thumbnails4j
   links:
-    - title: Pipeline
+    - title: Thumbnails4J
       url: https://buildkite.com/elastic/thumbnails4j
 
 spec:
@@ -47,6 +49,75 @@ spec:
     spec:
       repository: elastic/thumbnails4j
       pipeline_file: ".buildkite/pipeline.yml"
+      teams:
+        enterprise-search:
+          access_level: "MANAGE_BUILD_AND_READ"
+        everyone:
+          access_level: READ_ONLY
+
+---
+# yaml-language-server: $schema=https://gist.githubusercontent.com/elasticmachine/988b80dae436cafea07d9a4a460a011d/raw/rre.schema.json
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buildkite-deploy-snapshot-pipeline-thumbnails4j
+  description: Deploy Snapshot Buildkite Pipeline for thumbnails4j
+  links:
+    - title: Thumbnails4J
+      url: https://buildkite.com/elastic/thumbnails4j
+
+spec:
+  type: buildkite-pipeline
+  owner: group:enterprise-search
+  system: buildkite
+  implementation:
+    apiVersion: buildkite.elastic.dev/v1
+    kind: Pipeline
+    metadata:
+      name: thumbnails4j
+    spec:
+      repository: elastic/thumbnails4j
+      pipeline_file: ".buildkite/deploy_snapshot_pipeline.yml"
+      provider_settings:
+        trigger_mode: "none"
+      schedules:
+        Daily_Run:
+          branch: 'master'
+          message: "Runs daily snapshot deployment"
+          cronline: "15 6 * * *"
+      teams:
+        enterprise-search:
+          access_level: "MANAGE_BUILD_AND_READ"
+        everyone:
+          access_level: READ_ONLY
+
+---
+# yaml-language-server: $schema=https://gist.githubusercontent.com/elasticmachine/988b80dae436cafea07d9a4a460a011d/raw/rre.schema.json
+# Release deployment pipeline
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: buildkite-release-pipeline-thumbnails4j
+  description: Deploy Snapshot Buildkite Pipeline for thumbnails4j
+  links:
+    - title: Thumbnails4J
+      url: https://buildkite.com/elastic/thumbnails4j
+
+spec:
+  type: buildkite-pipeline
+  owner: group:enterprise-search
+  system: buildkite
+  implementation:
+    apiVersion: buildkite.elastic.dev/v1
+    kind: Pipeline
+    metadata:
+      name: thumbnails4j
+    spec:
+      repository: elastic/thumbnails4j
+      pipeline_file: ".buildkite/release_pipeline.yml"
+      provider_settings:
+        trigger_mode: "none"
       teams:
         enterprise-search:
           access_level: "MANAGE_BUILD_AND_READ"
