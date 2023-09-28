@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+##  This script prepares the Vault context and required tooling
+##  for the release and snapshot pipelines.
+##
+##  NOTE: *_SECRET or *_TOKEN env variables are masked, hence if you'd like to avoid any
+##        surprises please use the suffix _SECRET or _TOKEN for those values that contain
+##        any sensitive data. Buildkite can mask those values automatically
+
+set -eo pipefail
+
+export MAVEN_CONFIG="-V -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.http.retryHandler.count=3 -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false $MAVEN_CONFIG"
+
+echo "--- Prepare vault context :vault:"
+VAULT_ROLE_ID_SECRET=$(vault read -field=role-id secret/ci/elastic-thumbnails4j/internal-ci-approle)
+export VAULT_ROLE_ID_SECRET
+
+VAULT_SECRET_ID_SECRET=$(vault read -field=secret-id secret/ci/elastic-thumbnails4j/internal-ci-approle)
+export VAULT_SECRET_ID_SECRET
+
+VAULT_ADDR=$(vault read -field=vault-url secret/ci/elastic-thumbnails4j/internal-ci-approle)
+export VAULT_ADDR
+
+# Delete the vault specific accessing the ci vault
+PREVIOUS_VAULT_TOKEN=$VAULT_TOKEN
+export PREVIOUS_VAULT_TOKEN
+unset VAULT_TOKEN
+
+echo "--- Prepare a secure temp :closed_lock_with_key:"
+# Prepare a secure temp folder not shared between other jobs to store the key ring
+export TMP_WORKSPACE=/tmp/secured
+export KEY_FILE=$TMP_WORKSPACE"/private.key"
+
+# Secure home for our keyring
+export GNUPGHOME=$TMP_WORKSPACE"/keyring"
+mkdir -p $GNUPGHOME
+chmod -R 700 $TMP_WORKSPACE
+
+echo "--- Prepare keys context :key:"
+export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID_SECRET" secret_id="$VAULT_SECRET_ID_SECRET")
+
+# Nexus credentials
+export SERVER_USERNAME=$(vault read -field username secret/release/nexus)
+export SERVER_PASSWORD=$(vault read -field password secret/release/nexus)
+
+# Signing keys
+vault read -field key secret/release/signing >$KEY_FILE
+export KEYPASS=$( vault read -field passphrase secret/release/signing )
+
+# Import the key into the keyring
+echo $KEYPASS | gpg --batch --import $KEY_FILE
+# Use cached m2 repo to reduce the reset connection issues with the maven central
+if [ -d /var/lib/jenkins/.m2/repository ] ; then
+    export MAVEN_CONFIG="-Dmaven.repo.local=/var/lib/jenkins/.m2/repository $MAVEN_CONFIG"
+fi
