@@ -67,8 +67,8 @@
 
     <properties>
         <slf4j.version>1.7.25</slf4j.version>
-        <poi.version>4.1.2</poi.version>
-        <xdocreport.version>2.0.2</xdocreport.version>
+        <poi.version>5.2.5</poi.version>
+        <xdocreport.version>2.1.0</xdocreport.version>
         <pdfbox.version>2.0.24</pdfbox.version>
         <jakarta.version>2.3.2</jakarta.version>
         <jaxb.version>2.3.2</jaxb.version>
@@ -102,6 +102,11 @@
                         <artifactId>curvesap</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-full</artifactId>
+                <version>${poi.version}</version>
             </dependency>
             <dependency>
                 <groupId>fr.opensagres.xdocreport</groupId>

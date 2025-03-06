@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,7 +101,7 @@ public class DOCXThumbnailer implements Thumbnailer {
         if (pageSz == null){
             return dimensions;
         } else {
-            return new Dimensions(pageSz.getW().intValue(), pageSz.getH().intValue());
+            return new Dimensions(((BigInteger) pageSz.getW()).intValue(), ((BigInteger) pageSz.getH()).intValue());
         }
 
     }
