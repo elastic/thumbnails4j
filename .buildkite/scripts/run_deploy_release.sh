@@ -28,6 +28,8 @@ pushd $PROJECT_ROOT
 
 cd $PROJECT_ROOT
 
+export GPG_TTY=$(tty)
+
 if [[ "${RUN_TYPE}" == "deploy" ]]; then
     $mvnw_command -X -s .buildkite/mvn-settings.xml \
         -Pgpg clean deploy \
