@@ -10,5 +10,5 @@ agents:
 steps:
   - label: ":wrench: Maven Build"
     # command: "./mvnw clean verify"
-    command: ".buildkite/run_deploy_release.sh deploy"
+    command: ".buildkite/scripts/run_deploy_release.sh deploy"
     timeout_in_minutes: 45
