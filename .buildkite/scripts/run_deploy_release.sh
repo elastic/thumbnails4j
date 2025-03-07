@@ -17,26 +17,9 @@ SCRIPT_PATH="$(dirname "${BASH_SOURCE}")"
 PROJECT_ROOT=$(realpath "$(dirname "$SCRIPT_PATH")")
 
 # Prepare a secure temp folder not shared between other jobs to store the key ring
-export TMP_WORKSPACE=$WORKSPACE"@tmp"
-export KEY_FILE=$TMP_WORKSPACE"/private.key"
-# Secure home for our keyring
-export GNUPGHOME=$WORKSPACE"@tmp/keyring"
+
 # Set Maven options
 export MAVEN_CONFIG="-V -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.http.retryHandler.count=3 -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false $MAVEN_CONFIG"
-mkdir -p $GNUPGHOME
-chmod -R 700 $TMP_WORKSPACE
-
-# Make sure we delete this folder before leaving even in case of failure
-clean_up () {
-    ARG=$?
-    echo "Deleting tmp workspace"
-    rm -rf $TMP_WORKSPACE
-    echo "done"
-    exit $ARG
-}
-trap clean_up EXIT
-
-source "${SCRIPT_PATH}/set_token_key.sh"
 
 set -x
 
