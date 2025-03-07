@@ -25,10 +25,7 @@ set -x
 mvnw_command="$PROJECT_ROOT/mvnw"
 
 pushd $PROJECT_ROOT
-
 cd $PROJECT_ROOT
-
-# export GPG_TTY=$(tty)
 
 if [[ "${RUN_TYPE}" == "deploy" ]]; then
     $mvnw_command -s .buildkite/mvn-settings.xml \

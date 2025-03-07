@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-deploy" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-release" ]; then
+if [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-deploy" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-release" ]; then
     echo "--- Prepare github secrets :vault:"
     # Only accessible by Elastic employees
     GITHUB_SECRET=$VAULT_GITHUB_TOKEN
