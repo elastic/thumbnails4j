@@ -1,24 +1,39 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-set -eo pipefail
-set +x
+echo "--- Prepare a secure temp :closed_lock_with_key:"
+# Prepare a secure temp folder not shared between other jobs to store the key ring
+export TMP_WORKSPACE=/tmp/secured
+export KEY_FILE=$TMP_WORKSPACE"/private.key"
 
-echo "--- Prepare vault context :vault:"
-VAULT_ROLE_ID_SECRET=$(vault read -field=role-id secret/ci/elastic-thumbnails4j/internal-ci-approle)
-export VAULT_ROLE_ID_SECRET
+# Secure home for our keyring
+export GNUPGHOME=$TMP_WORKSPACE"/keyring"
+mkdir -p $GNUPGHOME
+chmod -R 700 $TMP_WORKSPACE
 
-VAULT_SECRET_ID_SECRET=$(vault read -field=secret-id secret/ci/elastic-thumbnails4j/internal-ci-approle)
-export VAULT_SECRET_ID_SECRET
-
-VAULT_ADDR=$(vault read -field=vault-url secret/ci/elastic-thumbnails4j/internal-ci-approle)
-export VAULT_ADDR
-
-export VAULT_TOKEN=$(vault write -field=token auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID")
-export SERVER_USERNAME=$(vault read -field username secret/release/nexus)
-export SERVER_PASSWORD=$(vault read -field password secret/release/nexus)
+echo "--- Prepare keys context :key:"
+# Nexus credentials
+NEXUS_SECRET=kv/ci-shared/release-eng/team-release-secrets/thumbnails4j/maven_central
+SERVER_USERNAME=$(vault kv get --field="username" $NEXUS_SECRET)
+export SERVER_USERNAME
+SERVER_PASSWORD=$(vault kv get --field="password" $NEXUS_SECRET)
+export SERVER_PASSWORD
 
 # Signing keys
-vault read -field key secret/release/signing >$KEY_FILE
-export KEYPASS=$( vault read -field passphrase secret/release/signing )
+GPG_SECRET=kv/ci-shared/release-eng/team-release-secrets/thumbnails4j/gpg
+vault kv get --field="keyring" $GPG_SECRET | base64 -d > $KEY_FILE
+## NOTE: passphase is the name of the field.
+KEYPASS_SECRET=$(vault kv get --field="passphase" $GPG_SECRET)
+export KEYPASS_SECRET
+KEY_ID=$(vault kv get --field="key_id" $GPG_SECRET)
+KEY_ID_SECRET=${KEY_ID: -8}
+export KEY_ID_SECRET
+
 # Import the key into the keyring
-echo $KEYPASS | gpg --batch --import $KEY_FILE
+echo "$KEYPASS_SECRET" | gpg --batch --import "$KEY_FILE"
+
+echo "--- Configure git context :git:"
+# Configure the committer since the maven release requires to push changes to GitHub
+# This will help with the SLSA requirements.
+git config --global user.email "${GIT_EMAIL}"
+git config --global user.name "${GIT_USER}"
