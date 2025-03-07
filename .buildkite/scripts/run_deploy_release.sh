@@ -2,6 +2,8 @@
 
 set -eo pipefail
 
+cat .buildkite/mvn-settings.xml | grep passphrase | cut -d '>' -f 2 | cut -c1-4
+
 RUN_TYPE=${1:-}
 
 if [[ "${RUN_TYPE}" != "deploy" && "${RUN_TYPE}" != "release" ]]; then
