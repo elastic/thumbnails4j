@@ -1,0 +1,13 @@
+## 🏠/.buildkite/deploy_snapshot_pipeline.yml
+# snapshot deployment pipeline - runs once per day
+
+agents:
+  image: "docker.elastic.co/ci-agent-images/enterprise-search/thumbnails4j-buildkite-agent"
+  ephemeralStorage: "20G"
+  memory: "4G"
+  useVault: true
+
+steps:
+  - label: ":truck: Maven Release"
+    command: ".buildkite/scripts/run_deploy_release.sh release"
+    timeout_in_minutes: 45
