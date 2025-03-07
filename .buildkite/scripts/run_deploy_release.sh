@@ -27,7 +27,8 @@ if [[ "${RUN_TYPE}" == "deploy" ]]; then
     ./mvnw -s .buildkite/mvn-settings.xml \
         -Pgpg clean deploy \
         -DskipTests \
-        --batch-mode 2>/dev/null
+        --batch-mode 
+        # 2>/dev/null
 elif [[ "${RUN_TYPE}" == "release" ]]; then
     ./mvnw release:prepare release:perform \
       --settings .buildkite/mvn-settings.xml \
