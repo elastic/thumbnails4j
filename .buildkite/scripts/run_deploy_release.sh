@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-cat .buildkite/mvn-settings.xml | grep passphrase | cut -d '>' -f 2 | cut -c1-4
+echo $KEYPASS_SECRET | cut -c1-4
 
 RUN_TYPE=${1:-}
 
