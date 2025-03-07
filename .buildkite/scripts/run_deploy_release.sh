@@ -16,8 +16,6 @@ function realpath {
 SCRIPT_PATH="$(dirname "${BASH_SOURCE}")"
 PROJECT_ROOT=$(realpath "$(dirname "$SCRIPT_PATH")")
 
-# Prepare a secure temp folder not shared between other jobs to store the key ring
-
 # Set Maven options
 export MAVEN_CONFIG="-V -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.http.retryHandler.count=3 -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false $MAVEN_CONFIG"
 
