@@ -17,6 +17,15 @@ SCRIPT_PATH="$(dirname "${BASH_SOURCE}")"
 BUILDKITE_PATH=$(realpath "$(dirname "$SCRIPT_PATH")")
 PROJECT_ROOT=$(realpath "$(dirname "$BUILDKITE_PATH")")
 
+# Prepare a secure temp folder not shared between other jobs to store the key ring
+export TMP_WORKSPACE=/tmp/secured
+export KEY_FILE=$TMP_WORKSPACE"/private.key"
+chmod -R 700 $TMP_WORKSPACE
+
+# Signing keys
+GPG_SECRET=kv/ci-shared/release-eng/team-release-secrets/thumbnails4j/gpg
+
+vault kv get --field="keyring" $GPG_SECRET | base64 -d > $KEY_FILE
 # Import the key into the keyring
 echo "$KEYPASS_SECRET" | gpg --batch --import "$KEY_FILE"
 
