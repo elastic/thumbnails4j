@@ -2,8 +2,6 @@
 
 set -eo pipefail
 
-echo $KEYPASS_SECRET | cut -c1-4
-
 RUN_TYPE=${1:-}
 
 if [[ "${RUN_TYPE}" != "deploy" && "${RUN_TYPE}" != "release" ]]; then
