@@ -21,7 +21,7 @@ export MAVEN_CONFIG="-V -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.tra
 
 set -x
 
-mvnw_command="{$PROJECT_ROOT}/mvnw"
+mvnw_command="$PROJECT_ROOT/mvnw"
 
 pushd $PROJECT_ROOT
 
