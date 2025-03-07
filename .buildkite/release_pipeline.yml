@@ -9,5 +9,5 @@ agents:
 
 steps:
   - label: ":truck: Maven Release"
-    command: ".buildkite/run_reploy_release.sh release"
+    command: ".buildkite/run_deploy_release.sh release"
     timeout_in_minutes: 45
