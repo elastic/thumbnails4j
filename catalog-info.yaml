@@ -74,7 +74,7 @@ spec:
     apiVersion: buildkite.elastic.dev/v1
     kind: Pipeline
     metadata:
-      name: thumbnails4j
+      name: thumbnails4j-deploy
     spec:
       repository: elastic/thumbnails4j
       pipeline_file: ".buildkite/deploy_snapshot_pipeline.yml"
@@ -112,7 +112,7 @@ spec:
     apiVersion: buildkite.elastic.dev/v1
     kind: Pipeline
     metadata:
-      name: thumbnails4j
+      name: thumbnails4j-release
     spec:
       repository: elastic/thumbnails4j
       pipeline_file: ".buildkite/release_pipeline.yml"

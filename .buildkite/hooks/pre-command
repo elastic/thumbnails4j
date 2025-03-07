@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "--- running pre-command hook for pipeline: $BUILDKITE_PIPELINE_SLUG"
-
-if [ "$BUILDKITE_PIPELINE_SLUG" == "buildkite-pipeline-thumbnails4j" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "buildkite-deploy-snapshot-pipeline-thumbnails4j" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "buildkite-release-pipeline-thumbnails4j" ]; then
+if [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-deploy" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-release" ]; then
     echo "--- Prepare a secure temp :closed_lock_with_key:"
     # Prepare a secure temp folder not shared between other jobs to store the key ring
     export TMP_WORKSPACE=/tmp/secured
