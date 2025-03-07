@@ -24,9 +24,6 @@ set -x
 
 mvnw_command="$PROJECT_ROOT/mvnw"
 
-touch ~/.gnupg/gpg.conf
-echo "pinentry-mode loopback" > ~/.gnupg/gpg.conf
-
 pushd $PROJECT_ROOT
 
 cd $PROJECT_ROOT
