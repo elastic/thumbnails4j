@@ -33,9 +33,9 @@ if [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j" ] || [ "$BUILDKITE_PIPELINE_SL
     # Import the key into the keyring
     echo "$KEYPASS_SECRET" | gpg --batch --import "$KEY_FILE"
 
-    echo "--- Configure git context :git:"
+    # echo "--- Configure git context :git:"
     # Configure the committer since the maven release requires to push changes to GitHub
     # This will help with the SLSA requirements.
-    git config --global user.email "${GIT_EMAIL}"
-    git config --global user.name "${GIT_USER}"
+    # git config --global user.email "${GIT_EMAIL}"
+    # git config --global user.name "${GIT_USER}"
 fi
