@@ -21,16 +21,20 @@ export MAVEN_CONFIG="-V -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.tra
 
 set -x
 
+mvnw_command="{$PROJECT_ROOT}/mvnw"
+
 pushd $PROJECT_ROOT
 
+cd $PROJECT_ROOT
+
 if [[ "${RUN_TYPE}" == "deploy" ]]; then
-    ./mvnw -s .buildkite/mvn-settings.xml \
+    $mvnw_command -s .buildkite/mvn-settings.xml \
         -Pgpg clean deploy \
         -DskipTests \
         --batch-mode 
         # 2>/dev/null
 elif [[ "${RUN_TYPE}" == "release" ]]; then
-    ./mvnw release:prepare release:perform \
+    $mvnw_command release:prepare release:perform \
       --settings .buildkite/mvn-settings.xml \
       -Darguments="-DskipTests --settings .ci/settings.xml" \
       --batch-mode 2>/dev/null
