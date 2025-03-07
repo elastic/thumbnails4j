@@ -40,6 +40,7 @@
     </servers>
     <profiles>
         <profile>
+            <id>thumbnails4j</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
