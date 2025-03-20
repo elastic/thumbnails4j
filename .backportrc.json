@@ -1,0 +1,14 @@
+{
+  "targetBranchChoices": [
+    { "name": "main", "checked": true },
+    "1.1",
+    "1.0"
+  ],
+  "fork": false,
+  "targetPRLabels": ["backport"],
+  "branchLabelMapping": {
+    "^v1.2.0$": "main",
+    "^v(\\d+).(\\d+)(.\\d+)*$": "$1.$2"
+  },
+  "upstream": "elastic/thumbnails4j"
+}
