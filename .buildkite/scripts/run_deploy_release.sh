@@ -17,6 +17,8 @@ SCRIPT_PATH="$(dirname "${BASH_SOURCE}")"
 BUILDKITE_PATH=$(realpath "$(dirname "$SCRIPT_PATH")")
 PROJECT_ROOT=$(realpath "$(dirname "$BUILDKITE_PATH")")
 
+source "${SCRIPT_PATH}/git_setup.sh"
+
 # Set Maven options
 export MAVEN_CONFIG="-V -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn -Dhttps.protocols=TLSv1.2 -Dmaven.wagon.http.retryHandler.count=3 -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false $MAVEN_CONFIG"
 
