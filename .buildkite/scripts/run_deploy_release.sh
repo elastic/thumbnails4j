@@ -37,7 +37,8 @@ if [[ "${RUN_TYPE}" == "deploy" ]]; then
 elif [[ "${RUN_TYPE}" == "release" ]]; then
     $mvnw_command release:prepare release:perform \
       --settings .buildkite/mvn-settings.xml \
-      -Darguments="-DskipTests --settings .ci/settings.xml" \
+      -Darguments="-DskipTests" \
+      -e -X \
       --batch-mode 2>/dev/null
 else
     echo "Invalid RUN_TYPE: ${RUN_TYPE}. Nothing to do."
