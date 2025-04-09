@@ -46,4 +46,20 @@ class PDFThumbnailerTest extends Specification {
         output.size() == 1
 //        thumbnail.getBytes() == actual_bytes
     }
+
+    def "test .pdf thumbnailing bigger"(){
+        setup:
+        File inputFile = new File("src/test/resources/test-bigger.pdf")
+        Thumbnailer thumbnailer = new PDFThumbnailer()
+
+        when:
+        def output = thumbnailer.getThumbnails(inputFile, [new Dimensions(100, 100)])
+        def baos = new ByteArrayOutputStream()
+        ImageIO.write(output[0], "jpg", baos)
+        baos.flush()
+        baos.close()
+
+        then:
+        output.size() == 1
+    }
 }
