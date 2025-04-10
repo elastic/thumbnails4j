@@ -56,6 +56,11 @@ import java.util.Map;
 public class PDFThumbnailer implements Thumbnailer {
     private static Logger logger = LoggerFactory.getLogger(PDFThumbnailer.class);
 
+    /**
+     * This allows the image dimensions to be a bit bigger than the page dimensions for producing a thumbnail
+     */
+    private static final double BUFFER_MULTIPLIER = 2.0;
+
     @Override
     public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
         try (PDDocument document = PDDocument.load(input)) {
@@ -107,8 +112,8 @@ public class PDFThumbnailer implements Thumbnailer {
         boolean allMatch = true;
         for(COSDictionary image: images){
             allMatch = allMatch && (
-                    image.getInt(COSName.WIDTH, 0) <= pageDimensions.getWidth() &&
-                    image.getInt(COSName.HEIGHT, 0) <= pageDimensions.getHeight()
+                    image.getInt(COSName.WIDTH, 0) <= pageDimensions.getWidth() * BUFFER_MULTIPLIER &&
+                    image.getInt(COSName.HEIGHT, 0) <= pageDimensions.getHeight() * BUFFER_MULTIPLIER
             );
         }
         return allMatch;
