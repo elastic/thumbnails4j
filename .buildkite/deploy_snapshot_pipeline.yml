@@ -7,6 +7,13 @@ agents:
   memory: "4G"
   useVault: true
 
+notify:
+  - if: 'build.branch =~ /^((main)|([0-9]+\.[0-9]+))\$/ && (build.state == "failed" || pipeline.started_passing)'
+    slack:
+      channels:
+        - "#search-et-alerts"
+      message: "${BUILDKITE_MESSAGE}"
+
 steps:
   - label: ":truck: Maven Deploy Snapshot"
     command: ".buildkite/scripts/run_deploy_release.sh deploy"
