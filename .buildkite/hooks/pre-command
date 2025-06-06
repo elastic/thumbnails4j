@@ -4,9 +4,10 @@ set -euo pipefail
 if [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-deploy" ] || [ "$BUILDKITE_PIPELINE_SLUG" == "thumbnails4j-release" ]; then
     echo "--- Prepare github secrets :vault:"
     # Only accessible by Elastic employees
-    GITHUB_SECRET=$VAULT_GITHUB_TOKEN
-    GIT_USER="elastic-vault-github-plugin-prod"
-    GIT_EMAIL="obltmachine@users.noreply.github.com"
+    MACHINE_USER_VAULT_PATH="kv/ci-shared/thumbnails4j/thumbnails4jmachine"
+    GITHUB_SECRET=$(vault kv get --field token "$MACHINE_USER_VAULT_PATH")
+    GIT_USER=$(vault kv get --field username "$MACHINE_USER_VAULT_PATH")
+    GIT_EMAIL=$(vault kv get --field email "$MACHINE_USER_VAULT_PATH")
     GH_TOKEN=$GITHUB_SECRET
     export GITHUB_SECRET GH_TOKEN GIT_USER GIT_EMAIL    
 
