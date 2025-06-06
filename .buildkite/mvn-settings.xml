@@ -37,6 +37,11 @@
             <username>${env.SERVER_USERNAME}</username>
             <password>${env.SERVER_PASSWORD}</password>
         </server>
+        <server>
+            <id>github</id>
+            <username>${env.GIT_USER}</username>
+            <password>${env.GH_TOKEN}</password>
+        </server>
     </servers>
     <profiles>
         <profile>
