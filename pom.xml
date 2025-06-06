@@ -29,7 +29,7 @@
 
     <scm>
         <connection>scm:git:git@github.com:elastic/thumbnails4j.git</connection>
-        <developerConnection>scm:git:git@github.com:elastic/thumbnails4j.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/elastic/thumbnails4j.git</developerConnection>
         <url>https://github.com/elastic/thumbnails4j</url>
         <tag>HEAD</tag>
     </scm>
@@ -78,6 +78,7 @@
         <cglib.version>3.3.0</cglib.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.scm.id>github</project.scm.id>
     </properties>
 
     <dependencyManagement>
