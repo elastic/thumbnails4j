@@ -6,7 +6,7 @@
     <artifactId>thumbnails4j</artifactId>
     <description>open source project for generating file thumbnail images with the JVM</description>
     <packaging>pom</packaging>
-    <version>1.1.6-SNAPSHOT</version>
+    <version>1.1.6</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
 
@@ -31,7 +31,7 @@
         <connection>scm:git:git@github.com:elastic/thumbnails4j.git</connection>
         <developerConnection>scm:git:https://github.com/elastic/thumbnails4j.git</developerConnection>
         <url>https://github.com/elastic/thumbnails4j</url>
-        <tag>HEAD</tag>
+        <tag>v1.1.6</tag>
     </scm>
 
     <developers>
