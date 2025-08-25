@@ -7,15 +7,23 @@ This product contains code copied from org.apache.poi:poi-examples:4.1.2.
 Third party libraries used by thumbnails4j:
 ===========================================
 
-  Apache Commons Codec under Apache License, Version 2.0
+  Apache Commons Codec under Apache-2.0
   Apache Commons Collections under Apache License, Version 2.0
-  Apache Commons Compress under Apache License, Version 2.0
-  Apache Commons Logging under The Apache Software License, Version 2.0
+  Apache Commons Compress under Apache-2.0
+  Apache Commons IO under Apache-2.0
+  Apache Commons Logging under Apache-2.0
   Apache Commons Math under Apache License, Version 2.0
-  Apache FontBox under Apache License, Version 2.0
-  Apache PDFBox under Apache License, Version 2.0
+  Apache FontBox under Apache-2.0
+  Apache Log4j API under Apache-2.0
+  Apache PDFBox under Apache-2.0
+  Apache PDFBox io under Apache-2.0
   Apache POI under Apache License, Version 2.0
+  Apache POI - API based on OPC and OOXML schemas under Apache License, Version 2.0
+  Apache POI - Common under Apache License, Version 2.0
+  Apache POI - OOXML schemas (full) under Apache License, Version 2.0
   curvesapi under BSD License
+  Extended StAX API under Eclipse Distribution License - v 1.0
+  fastinfoset under Apache License, Version 2.0 or Eclipse Distribution License - v 1.0
   fr.opensagres.poi.xwpf.converter.core under The MIT License (MIT)
   fr.opensagres.poi.xwpf.converter.pdf under The MIT License (MIT)
   fr.opensagres.poi.xwpf.converter.xhtml under The MIT License (MIT)
@@ -23,7 +31,10 @@ Third party libraries used by thumbnails4j:
   fr.opensagres.xdocreport.converter.docx.xwpf under The MIT License (MIT)
   fr.opensagres.xdocreport.core under The MIT License (MIT)
   fr.opensagres.xdocreport.itext.extension under The MIT License (MIT)
-  OOXML schemas under The Apache Software License, Version 2.0
+  istack common utility code runtime under Eclipse Distribution License - v 1.0
+  jakarta.xml.bind-api under Eclipse Distribution License - v 1.0
+  JavaBeans Activation Framework API jar under EDL 1.0
+  JAXB Runtime under Eclipse Distribution License - v 1.0
   SLF4J API Module under MIT License
   SparseBitSet under The Apache Software License, Version 2.0
   thumbnails4j-core under The Apache Software License, Version 2.0
@@ -34,5 +45,6 @@ Third party libraries used by thumbnails4j:
   thumbnails4j-pptx under The Apache Software License, Version 2.0
   thumbnails4j-xls under The Apache Software License, Version 2.0
   thumbnails4j-xlsx under The Apache Software License, Version 2.0
+  TXW2 Runtime under Eclipse Distribution License - v 1.0
   XmlBeans under The Apache Software License, Version 2.0
 
