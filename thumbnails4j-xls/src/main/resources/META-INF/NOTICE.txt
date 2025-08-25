@@ -6,10 +6,13 @@ This product includes software developed by The Apache Software Foundation (http
 Third party libraries used by thumbnails4j-xls:
 ===============================================
 
-  Apache Commons Codec under Apache License, Version 2.0
+  Apache Commons Codec under Apache-2.0
   Apache Commons Collections under Apache License, Version 2.0
+  Apache Commons IO under Apache-2.0
   Apache Commons Math under Apache License, Version 2.0
+  Apache Log4j API under Apache-2.0
   Apache POI under Apache License, Version 2.0
+  Apache POI - Common under Apache License, Version 2.0
   SLF4J API Module under MIT License
   SparseBitSet under The Apache Software License, Version 2.0
   thumbnails4j-core under The Apache Software License, Version 2.0

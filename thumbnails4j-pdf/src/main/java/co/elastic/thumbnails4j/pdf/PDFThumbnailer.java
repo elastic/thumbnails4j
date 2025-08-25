@@ -29,10 +29,13 @@ import org.apache.pdfbox.cos.COSBase;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSObject;
+import org.apache.pdfbox.io.RandomAccessReadBuffer;
+import org.apache.pdfbox.io.RandomAccessReadBufferedFile;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.Loader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +66,7 @@ public class PDFThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(File input, List<Dimensions> dimensions) throws ThumbnailingException {
-        try (PDDocument document = PDDocument.load(input)) {
+        try (PDDocument document = Loader.loadPDF(new RandomAccessReadBufferedFile(input))) {
             return getThumbnails(document, dimensions);
         } catch (IOException e) {
             logger.error("Could not load input as PDF: ", e);
@@ -73,7 +76,7 @@ public class PDFThumbnailer implements Thumbnailer {
 
     @Override
     public List<BufferedImage> getThumbnails(InputStream input, List<Dimensions> dimensions) throws ThumbnailingException {
-        try (PDDocument document = PDDocument.load(input)) {
+        try (PDDocument document = Loader.loadPDF(new RandomAccessReadBuffer(input))) {
             return getThumbnails(document, dimensions);
         } catch (IOException e) {
             logger.error("Could not load input as PDF: ", e);

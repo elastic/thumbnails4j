@@ -7,11 +7,15 @@ This product contains code copied from org.apache.poi:poi-examples:4.1.2.
 Third party libraries used by thumbnails4j-xlsx:
 ================================================
 
-  Apache Commons Codec under Apache License, Version 2.0
+  Apache Commons Codec under Apache-2.0
   Apache Commons Collections under Apache License, Version 2.0
-  Apache Commons Compress under Apache License, Version 2.0
+  Apache Commons Compress under Apache-2.0
+  Apache Commons IO under Apache-2.0
   Apache Commons Math under Apache License, Version 2.0
+  Apache Log4j API under Apache-2.0
   Apache POI under Apache License, Version 2.0
+  Apache POI - API based on OPC and OOXML schemas under Apache License, Version 2.0
+  Apache POI - Common under Apache License, Version 2.0
   curvesapi under BSD License
   SLF4J API Module under MIT License
   SparseBitSet under The Apache Software License, Version 2.0

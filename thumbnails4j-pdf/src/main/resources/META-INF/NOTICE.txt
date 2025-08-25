@@ -6,9 +6,10 @@ This product includes software developed by The Apache Software Foundation (http
 Third party libraries used by thumbnails4j-pdf:
 ===============================================
 
-  Apache Commons Logging under The Apache Software License, Version 2.0
-  Apache FontBox under Apache License, Version 2.0
-  Apache PDFBox under Apache License, Version 2.0
+  Apache Commons Logging under Apache-2.0
+  Apache FontBox under Apache-2.0
+  Apache PDFBox under Apache-2.0
+  Apache PDFBox io under Apache-2.0
   SLF4J API Module under MIT License
   thumbnails4j-core under The Apache Software License, Version 2.0
 
