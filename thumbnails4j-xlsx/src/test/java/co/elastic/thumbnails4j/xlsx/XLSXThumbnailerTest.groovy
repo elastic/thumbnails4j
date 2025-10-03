@@ -34,6 +34,7 @@ class XLSXThumbnailerTest extends Specification {
         File inputFile = new File("src/test/resources/test-input.xlsx")
         File thumbnail = new File("src/test/resources/test-output.jpg")
         Thumbnailer thumbnailer = new XLSXThumbnailer()
+        byte[] origBytes = inputFile.getBytes()
 
         when:
         def output = thumbnailer.getThumbnails(inputFile, [new Dimensions(100, 100)])
@@ -45,6 +46,7 @@ class XLSXThumbnailerTest extends Specification {
 
         then:
         output.size() == 1
+        origBytes == inputFile.getBytes() // issue #54, validates original file is not corrupted
 //        thumbnail.getBytes() == actual_bytes
     }
 }
